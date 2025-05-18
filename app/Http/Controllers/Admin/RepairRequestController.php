@@ -44,6 +44,11 @@ class RepairRequestController extends Controller
             return $value !== 'undefined';
         });
 
+        // เงื่อนไขการจัดการ status
+        if ($request->has('status') && $request->status === 'returned') {
+            $data['status'] = 'assigned';
+        }
+
         $repair = RepairRequest::findOrFail($id);
 
         // seseion observer

@@ -40,16 +40,25 @@
                     </span>
                 </td>
                 <td>
-                    <span class="badge bg-{{ 
-                        match($repair->status) {
-                            'pending' => 'secondary',
-                            'assigned' => 'primary',
-                            'in_progress' => 'warning',
-                            'completed' => 'success',
-                            'rejected' => 'danger',
-                            default => 'dark'
-                        }
-                    }}">
+                    <span class="badge
+                        text-{{
+                            match($repair->status) {
+                                'returned' => 'warning',
+                                default => 'white'
+                            }
+                        }}
+
+                        bg-{{ 
+                            match($repair->status) {
+                                'pending' => 'secondary',
+                                'assigned' => 'primary',
+                                'in_progress' => 'warning',
+                                'completed' => 'success',
+                                'rejected' => 'danger',
+                                'returned' => 'white',
+                                default => 'dark'
+                            }
+                        }}">
                         {{ ucfirst(str_replace('_', ' ', $repair->status)) }}
                     </span>
                 </td>

@@ -12,24 +12,20 @@
                 <div class="modal-body">
 
                     <div class="mb-3">
-                        <label for="title" class="form-label">หัวข้อ</label>
+                        <label for="priority" class="form-label">หัวข้อ</label>
                         <input type="text" class="form-control" name="title" id="title">
                     </div>
 
                     <div class="mb-3">
-                        <label for="status" class="form-label">สถานะ</label>
-                        <select class="form-select" name="status" id="status" required>
-                            <option value="in_progress">กำลังดำเนินการ</option>
-                            <option value="returned">ขอรายละเอียดเพิ่มเติม</option>
-                            <option value="completed">เสร็จสิ้น</option>
-                            <option value="rejected">ปฏิเสธ</option>
-                        </select>
+                        <label for="note" class="form-label">รายละเอียด</label>
+                        <textarea name="description" id="description" rows="3" class="form-control"></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="note" class="form-label">หมายเหตุ</label>
-                        <textarea name="note" id="note" class="form-control" rows="3"></textarea>
+                        <input type="text" class="form-control" id="note" name="note">
                     </div>
+                    <input type="hidden" id="status" name="status">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-outline-primary">บันทึก</button>

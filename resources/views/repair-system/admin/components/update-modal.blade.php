@@ -35,6 +35,7 @@
                         <label for="note" class="form-label">หมายเหตุ</label>
                         <input type="text" class="form-control" id="note" name="note">
                     </div>
+                    <input type="hidden" id="status" name="status">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-outline-primary">บันทึก</button>

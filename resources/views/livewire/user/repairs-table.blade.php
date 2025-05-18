@@ -24,13 +24,22 @@
                 <td>{{ $repair->latestLog?->updater?->name ?? '-'}}</td>
                 <td>{{ $repair->description }}</td>
                 <td>
-                    <span class="badge bg-{{ 
+                    <span class="badge
+                    text-{{
+                        match($repair->status) {
+                            'returned' => 'warning',
+                            default => 'white'
+                        }
+                    }}
+
+                    bg-{{ 
                         match($repair->status) {
                             'pending' => 'secondary',
                             'assigned' => 'primary',
                             'in_progress' => 'warning',
                             'completed' => 'success',
                             'rejected' => 'danger',
+                            'returned' => 'white',
                             default => 'dark'
                         }
                     }}">
@@ -43,13 +52,21 @@
                 <td>{{ $repair->created_at->format('d/m/Y H:i') }}</td>
                 <td>{{ optional($repair->latestLog)->updated_at?->format('d/m/Y H:i') ?? '-' }}</td>
                 <td>
-                    @if($repair->status !== 'rejected' && $repair->status !== 'cancel' && $repair->status !== 'completed')
-                        <button class="btn btn-sm btn-outline-secondary" onclick="userUpdateRepair({{ $repair->id }},'{{ $repair->title }}', '{{ optional($repair->latestLog)->note }}', '{{ $repair->description }}')">
+                    @if($repair->status === 'pending' || $repair->status === 'assigned' || $repair->status === 'returned')
+                        <button class="btn btn-sm btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateModal"
+                            data-id="{{ $repair->id }}"
+                            data-title="{{ $repair->title }}"
+                            data-status="{{ $repair->status }}"
+                            data-description="{{ $repair->description }}"
+                            data-note="{{ optional($repair->latestLog)->note ?? '-' }}">
                             แก้ไข
                         </button>
+                        @include('repair-system.user.components.update-modal')
 
                     @endif
-                    @if($repair->status !== 'rejected' && $repair->status !== 'completed' && $repair->status !== 'cancel')
+                    @if($repair->status === 'pending')
                         <button class="btn btn-sm btn-outline-warning" onclick="confirmCancel({{ $repair->id }})">
                             ยกเลิก
                         </button>

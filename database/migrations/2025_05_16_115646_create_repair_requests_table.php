@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ผู้แจ้ง
             $table->string('title');
             $table->text('description');
-            $table->enum('status', ['pending', 'assigned', 'in_progress', 'completed', 'rejected', 'cancel'])->default('pending');
+            $table->enum('status', ['pending', 'assigned', 'in_progress', 'completed', 'rejected', 'cancel', 'returned'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high', 'critical'])->default('medium');
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null'); // ช่าง
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null'); // ผู้อนุมัติ

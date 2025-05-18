@@ -37,66 +37,6 @@
     <input type="hidden" name="note" id="cancel-note">
 </form>
 
-{{-- update modal --}}
-<form id="user-update-form" method="POST" style="display: none;">
-    @csrf
-    @method('PATCH')
-    <input type="hidden" name="title" id="update-title">
-    <input type="hidden" name="note" id="update-note">
-    <input type="hidden" name="description" id="update-description">
-</form>
-
-<script>
-    function userUpdateRepair(repairId,title='',note='',description='') {
-        Swal.fire({
-            title: 'อัปเดตรายการ',
-            html:
-                `
-                 <input id="swal-title" class="swal2-input" placeholder="หัวข้อ (ขั้นต่ำ 5 ตัวอักษร)" value="${title || ''}">
-                 <textarea id="swal-note" class="swal2-textarea" placeholder="หมายเหตุ (ไม่จำเป็น)">${note || ''}</textarea>
-                 <textarea id="swal-description" class="swal2-textarea" placeholder="รายละเอียด (ขั้นต่ำ 5 ตัวอักษร)">${description || ''}</textarea>`
-            ,
-            focusConfirm: false,
-            preConfirm: () => {
-                const title = document.getElementById('swal-title').value;
-                const note = document.getElementById('swal-note').value;
-                
-                const description = document.getElementById('swal-description').value;
-
-                if (title.length < 5 || title.length > 100) {
-                    Swal.showValidationMessage('ชื่อต้องไม่เกิน 100 ตัวอักษร (ขั้นต่ำ 5 ตัวอักษร)');
-                    return false;
-                }
-                
-                if (description.length < 5 || description.length > 255) {
-                    Swal.showValidationMessage('รายละเอียดต้องไม่เกิน 255 ตัวอักษร (ขั้นต่ำ 5 ตัวอักษร)');
-                    return false;
-                }
-
-                if (note.length > 255) {
-                    Swal.showValidationMessage('หมายเหตุต้องไม่เกิน 255 ตัวอักษร');
-                    return false;
-                }
-
-                return { title, note, description };
-            },
-            showCancelButton: true,
-            confirmButtonText: 'บันทึก',
-            cancelButtonText: 'ยกเลิก',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const form = document.getElementById('user-update-form');
-                document.getElementById('update-title').value = result.value.title;
-                document.getElementById('update-note').value = result.value.note;
-                document.getElementById('update-description').value = result.value.description;
-
-                form.action = `/user/requests/${repairId}`;
-                form.submit();
-            }
-        });
-    }
-</script>
-
 <script>
     function confirmCancel(repairId) {
         Swal.fire({

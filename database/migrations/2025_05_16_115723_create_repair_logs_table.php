@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('repair_request_id')->constrained()->onDelete('cascade');
             $table->foreignId('updated_by')->constrained('users')->onDelete('cascade');
-            $table->enum('status_before', ['pending', 'assigned', 'in_progress', 'completed', 'rejected','cancel']);
-            $table->enum('status_after', ['pending', 'assigned', 'in_progress', 'completed', 'rejected','cancel']);
+            $table->enum('status_before', ['pending', 'assigned', 'in_progress', 'completed', 'rejected','cancel','returned']);
+            $table->enum('status_after', ['pending', 'assigned', 'in_progress', 'completed', 'rejected','cancel','returned']);
             $table->text('note')->nullable();
             $table->timestamp('previous_updated_at')->nullable();
             $table->timestamps();
