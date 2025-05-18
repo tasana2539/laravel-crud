@@ -17,10 +17,12 @@
     <!-- Scripts -->
     </head><script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    @livewireStyles
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -73,10 +75,10 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="p-md-4 p-2">
             @guest
             @else
-                <div class="container">
+                <div class="">
                     <h1>{{Auth::user()->role}} dashboard</h1>
                     <p>Welcome, {{ Auth::user()->name }}</p>
                 
@@ -112,5 +114,6 @@
     });
 </script>
 @endif
+@livewireScripts
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ITManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\RepairRequest;
@@ -10,34 +10,17 @@ class RepairRequestController extends Controller
 {
     public function index()
     {
-        return view('repair-system.admin.dashboard');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'priority' => 'required|in:low,medium,high,critical',
-        ]);
-
-        RepairRequest::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'description' => $request->description,
-            'priority' => $request->priority,
-        ]);
-
-        return redirect()->back()->with('success', 'แจ้งซ่อมเรียบร้อยแล้ว');
+        return view('repair-system.it-manager.dashboard');
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:100',
+            'status' => 'required|string|max:50',
+            'approved_by' => 'required|numeric|max:10',
+            'assigned_to' => 'required|string|max:50',
             'priority' => 'required|string|max:10',
             'note' => 'nullable|string|max:255',
-            'description' => 'nullable|string|min:5|max:255',
         ]);
         
         $data = array_filter($validated, function ($value) {
@@ -53,7 +36,7 @@ class RepairRequestController extends Controller
 
         session()->forget('repair_note'); // clear session
 
-        return redirect()->back()->with('success', 'อัปเดตเรียบร้อยแล้ว');
+        return redirect()->back()->with('success', 'มอบหมายงานแล้ว');
     }
 
     public function destroy($id)

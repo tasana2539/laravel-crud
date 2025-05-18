@@ -34,4 +34,15 @@ class RepairRequest extends Model
     {
         return $this->hasOne(RepairLog::class)->latestOfMany();
     }
+
+    public function technician()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
 }

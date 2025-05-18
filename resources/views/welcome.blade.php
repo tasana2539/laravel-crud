@@ -31,7 +31,7 @@
                                         $role = auth()->user()->role;
                                         $routes = [
                                             'admin' => 'admin.requests.index',
-                                            'it-manager' => 'it.requests.index',
+                                            'it-manager' => 'it-manager.requests.index',
                                             'technician' => 'technician.requests.index',
                                             'user' => 'user.requests.index',
                                         ];

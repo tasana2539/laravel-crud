@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- ปุ่มเรียก Modal -->
-<button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#repairModal">
-    แจ้งซ่อม
-</button>
 <div class="card">
   <div class="card-header">
     ตารางข้อมูล
@@ -13,28 +9,28 @@
     
     <!-- ตารางแจ้งซ่อม -->
     <div class="table-responsive">
-       @livewire('admin.repairs-table')
+       @livewire('it-manager.repairs-table')
     </div>
   </div>
 </div>
-@include('repair-system.admin.components.repair-modal')
+@include('repair-system.it-manager.components.repair-modal')
 <script>
-    const assignModal = document.getElementById('adminUpdateModal')
+    const assignModal = document.getElementById('assignModal')
     if (assignModal) {
       assignModal.addEventListener('show.bs.modal', function (event) {
           const button = event.relatedTarget
           const id = button.getAttribute('data-id')
-          const title = button.getAttribute('data-title')
           const priority = button.getAttribute('data-priority')
-          const description = button.getAttribute('data-description')
           const note = button.getAttribute('data-note')
+          const assigned_to = button.getAttribute('data-assigned_to')
+          const approved_by = button.getAttribute('data-approved_by')
 
-          const form = assignModal.querySelector('#adminUpdateForm')
-          form.action = `/admin/requests/${id}` // ใช้ route update
+          const form = assignModal.querySelector('#assignForm')
+          form.action = `/it-manager/requests/${id}` // ใช้ route update
           
-          assignModal.querySelector('#title').value = title ?? ''
+          assignModal.querySelector('#approved_by').value = approved_by
           assignModal.querySelector('#priority').value = priority
-          assignModal.querySelector('#description').value = description ?? ''
+          assignModal.querySelector('#assigned_to').value = assigned_to ?? ''
           assignModal.querySelector('#note').value = note ?? ''
       })
     }

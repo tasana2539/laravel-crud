@@ -30,7 +30,7 @@ class LoginController extends Controller
     {
         $prefix = match (Auth::user()->role) {
             'admin' => 'admin',
-            'it-manager' => 'it',
+            'it-manager' => 'it-manager',
             'technician' => 'technician',
             default => 'user',
         };

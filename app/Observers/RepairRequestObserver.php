@@ -8,7 +8,7 @@ class RepairRequestObserver
 {
     public function updating(RepairRequest $repair)
     {
-        if ($repair->isDirty('status')) {
+        if ($repair->exists && $repair->id) {
             \App\Models\RepairLog::create([
                 'repair_request_id' => $repair->id,
                 'updated_by' => auth()->id(),
@@ -16,7 +16,7 @@ class RepairRequestObserver
                 'status_after' => $repair->status,
                 'note' => session('repair_note') ?? '',
                 'updated_at' => now(),
-                'previous_updated_at' => $repair->updated_at, // เวลาที่สถานะก่อนหน้าเกิด
+                'previous_updated_at' => $repair->updated_at,
             ]);
         }
     }
