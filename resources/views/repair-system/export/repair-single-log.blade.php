@@ -2,6 +2,8 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: "thsarabun";
@@ -11,10 +13,6 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
-        }
-        .logo {
-            width: 100px;
-            margin-bottom: 10px;
         }
         h1 {
             margin: 0;
@@ -39,20 +37,14 @@
         .signature {
             text-align: center;
         }
-        .qr {
-            margin-top: 20px;
-            text-align: right;
-        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        {{-- โลโก้บริษัท (ปรับ path ตามจริง) --}}
         <h1>ใบแจ้งซ่อม</h1>
     </div>
 
-    {{-- ตารางข้อมูล --}}
     <table>
         <tr>
             <th>หัวข้อ</th>
@@ -89,15 +81,38 @@
             <th>หมายเหตุ</th>
             <td>{{ $repair->latestLog?->note ?? '-' }}</td>
         </tr>
-        <tr>
-            <th>ความคิดเห็น</th>
-            <td></td>
-        </tr>
     </table>
 
-    {{-- ลายเซ็น --}}
+    <h5 class="mt-3">รายละเอียด</h5>
+    <div class="w-100">
+        <textarea class="form-control">{{ $repair->description ?? '-' }}</textarea>
+
+    </div>
+    <h5 class="mt-3">ประวัติการดำเนินงาน</h5>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">สถานะ</th>
+                <th scope="col">โดย</th>
+                <th scope="col">วันที่</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($repair->logs as $log)
+                <tr>
+                    <td>
+                        <span class="fw-bold">{{ $log->status_after }}</span>
+                    </td>
+                    <td>{{ $log->updater->name ?? '-' }}</td>
+                    <td>{{ $log->updated_at->format('d/m/Y H:i') }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
     <div class="footer">
-        <div class="d-flex justify-content-between">
+        <div class="">
             <div class="signature">
                 ............................................<br>
                 ผู้แจ้งซ่อม

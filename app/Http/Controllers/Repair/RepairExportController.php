@@ -20,11 +20,10 @@ class RepairExportController extends Controller
         // Redirect ไปแสดง PDF โดยไม่โชว์ id
         return redirect()->route('repair.pdf.single-view');
     }
-
-    public function viewPdf()
+    
+    public function viewPdf(Request $request)
     {
         $id = session('pdf_repair_id');
-
         if (!$id) {
             abort(403, 'PDF access denied');
         }
@@ -37,7 +36,6 @@ class RepairExportController extends Controller
 
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
-
         $mpdf = new Mpdf([
             'fontDir' => array_merge($fontDirs, [resource_path('fonts/')]),
             'fontdata' => $fontData + [
@@ -50,9 +48,18 @@ class RepairExportController extends Controller
             ],
             'default_font' => 'thsarabun',
         ]);
-
         $html = view('repair-system.export.repair-single-log', compact('repair'))->render();
         $mpdf->WriteHTML($html);
-        return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
+        $pdfContent = $mpdf->Output('', 'S');
+
+        // แยกดาวน์โหลดหรือแสดง
+        $disposition = $request->has('download') ? 'attachment' : 'inline';
+
+        $filename = date('Y-m-d_H-i-s') . '-document.pdf';
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', $disposition . '; filename='.$filename)
+            ->header('Content-Length', strlen($pdfContent));
     }
+
 }
