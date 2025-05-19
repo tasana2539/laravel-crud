@@ -64,8 +64,8 @@
                     </span>
                 </td>
                 <td>{{ optional($repair->latestLog)->note ?? '-' }}</td>
-                <td>{{ $repair->assigned_to ?? '-' }}</td>
-                <td>{{ $repair->approved_by ?? '-' }}</td>
+                <td>{{ optional($repair->technician)->name ?? '-' }}</td>
+                <td>{{ optional($repair->manager)->name ?? '-' }}</td>
                 <td>{{ $repair->created_at->format('d/m/Y H:i') }}</td>
                 <td>{{ optional($repair->latestLog)->updated_at?->format('d/m/Y H:i') ?? '-' }}</td>
                 <td class="text-center">
@@ -85,6 +85,15 @@
                         @endif
 
                     @endif
+                    <form action="{{ route('repair.pdf.single-request') }}" method="POST" target="_blank" style="display:inline;">
+                        @csrf
+                        <input type="hidden" name="repair_id" value="{{ $repair->id }}">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            Export PDF
+                        </button>
+                    </form>
+
+
                 </td>
             </tr>
         @empty

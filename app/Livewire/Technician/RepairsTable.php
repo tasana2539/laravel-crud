@@ -10,7 +10,7 @@ class RepairsTable extends Component
 {
     public function render()
     {
-        $repairs = RepairRequest::with(['latestLog.updater', 'user', 'technician'])
+        $repairs = RepairRequest::with(['latestLog.updater', 'user','technician', 'manager'])
             ->where('assigned_to', auth()->id()) // แสดงเฉพาะที่ช่างรับเอง
             ->latest()
             ->get();

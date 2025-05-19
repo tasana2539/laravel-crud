@@ -8,6 +8,7 @@ use App\Http\Controllers\User\RepairRequestController as UserRepair;
 use App\Http\Controllers\Admin\RepairRequestController as AdminRepair;
 use App\Http\Controllers\Technician\RepairRequestController as TechnicianRepair;
 use App\Http\Controllers\ITManager\RepairRequestController as ITmanagerRepair;
+use App\Http\Controllers\Repair\RepairExportController as RepairExport;
 
 // หน้าแรก
 Route::get('/', fn () => view('welcome'));
@@ -37,3 +38,7 @@ Route::middleware(['auth', 'role:technician'])->prefix('technician')->name('tech
 Route::middleware(['auth', 'role:it-manager'])->prefix('it-manager')->name('it-manager.')->group(function () {
     Route::resource('/requests', ITmanagerRepair::class)->only(['index', 'update']);
 });
+
+//global route
+Route::post('/repair/pdf/single-request', [RepairExport::class, 'requestPdf'])->name('repair.pdf.single-request');
+Route::get('/repair/pdf/single-view', [RepairExport::class, 'viewPdf'])->name('repair.pdf.single-view');
