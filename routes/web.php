@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RepairRequestController as AdminRepair;
 use App\Http\Controllers\Technician\RepairRequestController as TechnicianRepair;
 use App\Http\Controllers\ITManager\RepairRequestController as ITmanagerRepair;
 use App\Http\Controllers\Repair\RepairExportController as RepairExport;
+use App\Http\Controllers\Admin\ManageUsersController as ManageUser;
 
 // หน้าแรก
 Route::get('/', fn () => view('welcome'));
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 // ADMIN SECTION
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('/requests', AdminRepair::class)->only(['index', 'update', 'store', 'destroy']);
+    Route::resource('/users', ManageUser::class)->only(['index', 'update', 'store', 'destroy']);
 });
 
 // TECHNICIAN SECTION

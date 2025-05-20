@@ -2,9 +2,16 @@
 
 @section('content')
     <!-- ปุ่มเรียก Modal -->
-<button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#repairModal">
-    แจ้งซ่อม
-</button>
+<div class="card-body mb-4">
+  <div class="row">
+    <button type="button" class="btn btn-outline-primary col-md-2" data-bs-toggle="modal" data-bs-target="#repairModal">
+        แจ้งซ่อม
+    </button>
+    <a href="{{ route('admin.users.index') }}" class="mx-md-2 btn btn-outline-secondary col-md-2">จัดการผู้ใช้</a>
+
+        
+  </div>
+</div>
 <div class="card">
   <div class="card-header">
     ตารางข้อมูล
