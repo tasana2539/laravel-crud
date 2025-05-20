@@ -1,4 +1,4 @@
- <table class="table table-bordered table-striped align-middle overflow-auto">
+ <table class="table table-bordered table-hover overflow-auto">
     <thead class="table-dark">
         <tr>
             <th>#</th>
@@ -68,7 +68,12 @@
                 <td>{{ $repair->manager->name ?? '-' }}</td>
                 <td>{{ $repair->created_at->format('d/m/Y H:i') }}</td>
                 <td>{{ optional($repair->latestLog)->updated_at?->format('d/m/Y H:i') ?? '-' }}</td>
-                <td class="text-center">
+                <td class="">
+                    <button 
+                        class="btn btn-sm btn-outline-secondary" 
+                        onclick="openPdfPreview({{ $repair->id }})">
+                        รายละเอียด
+                    </button>
                     @if($repair->status === 'pending' || $repair->status === 'assigned' || $repair->status === 'returned')
                         <button class="btn btn-sm btn-primary"
                             data-bs-toggle="modal"

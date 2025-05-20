@@ -20,5 +20,6 @@
     </div>
   </div>
 </div>
-@endsection
 @include('repair-system.admin.components.create-user-modal')
+@include('repair-system.admin.components.edit-user-modal')
+@endsection

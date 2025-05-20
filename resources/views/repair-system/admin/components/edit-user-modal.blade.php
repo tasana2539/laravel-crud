@@ -1,11 +1,12 @@
-{{-- create user modal --}}
-<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+{{-- edit user modal --}}
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="{{ route('admin.users.store') }}" method="POST">
+    <form method="POST" id="editUserForm">
       @csrf
+      @method('PUT')
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createUserModalLabel">สร้างผู้ใช้ใหม่</h5>
+          <h5 class="modal-title" id="editUserModalLabel">แก้ไขข้อมูลผู้ใช้</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="ปิด"></button>
         </div>
         <div class="modal-body">
@@ -22,12 +23,12 @@
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" required>
+            <input type="password" class="form-control" name="password">
           </div>
 
           <div class="mb-3">
             <label for="password_confirmation" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="password_confirmation" required>
+            <input type="password" class="form-control" name="password_confirmation">
           </div>
 
           <div class="mb-3">
@@ -53,23 +54,26 @@
 </div>
 
 <script>
-  function deleteUser (id) {
-    Swal.fire({
-        title: 'คุณแน่ใจหรือไม่?',
-        text: 'หากลบแล้วจะไม่สามารถกู้คืนได้!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'ใช่, ลบเลย!',
-        cancelButtonText: 'ยกเลิก'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form = document.getElementById('delete-form-' + id);
-            if (form) {
-                form.submit();
-            } else {
-                console.error('ไม่พบฟอร์ม delete-form-' + id);
-            }
-        }
-    });
-  }
+function editUser(userId) {
+    const form = document.getElementById('editUserForm');
+    form.reset();
+    
+    fetch(`/admin/users/${userId}/edit`)
+        .then(response => response.json())
+        .then(user => {
+            // Update form action
+            document.getElementById('editUserForm').action = `/admin/users/${userId}`;
+
+            // Populate form fields
+            document.querySelector('#editUserForm input[name="name"]').value = user.name;
+            document.querySelector('#editUserForm input[name="email"]').value = user.email;
+            document.querySelector('#editUserForm input[name="password"]').value = '';
+            document.querySelector('#editUserForm input[name="password_confirmation"]').value = '';
+            document.querySelector('#editUserForm select[name="role"]').value = user.role;
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+            alert('Could not load user data.');
+        });
+}
 </script>

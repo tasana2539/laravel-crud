@@ -19,7 +19,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     @livewireStyles
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script>
+        function openPdfPreview(repairId) {
+      fetch("{{ route('repair.pdf.single-request') }}", {
+          method: "POST",
+          headers: {
+              "X-CSRF-TOKEN": "{{ csrf_token() }}",
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ repair_id: repairId })
+      })
+      .then(() => {
+          // เมื่อ session พร้อมแล้ว เปลี่ยน src ของ iframe
+          const iframe = document.getElementById('pdfIframe');
+          iframe.src = "{{ route('repair.pdf.single-view') }}";
+
+          // เปลี่ยนลิงก์ของปุ่มดาวน์โหลด
+          const downloadBtn = document.getElementById('downloadPdfBtn');
+          downloadBtn.href = "{{ route('repair.pdf.single-view') }}?download=1";
+
+          // เปิด modal
+          const modal = new bootstrap.Modal(document.getElementById('pdfPreviewModal'));
+          modal.show();
+      });
+    }
+    </script>
 <body>
+    @include('repair-system.export.single-export-modal')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">

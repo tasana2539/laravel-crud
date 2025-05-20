@@ -7,11 +7,19 @@ use App\Enums\Role;
 
 class ManageUsers extends Component
 {
+    public array $roles = [];
+    public $users;
+
+    public function mount()
+    {
+        $this->roles = Role::cases();
+        $this->users = User::where('role', '!=', Role::ADMIN->value)
+            ->latest()
+            ->get();
+    }
+
     public function render()
     {
-        $roles = Role::cases();
-        $users = User::where('role', '!=', Role::ADMIN->value)->latest()->get();
-
-        return view('livewire.admin.manage-users', compact('users', 'roles'));
+        return view('livewire.admin.manage-users');
     }
 }

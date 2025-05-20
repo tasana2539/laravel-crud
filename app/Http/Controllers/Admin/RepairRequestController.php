@@ -6,10 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\RepairRequest;
 use Illuminate\Http\Request;
 
-//enum
-use Illuminate\Validation\Rules\Enum;
-use App\Enums\Role;
-
 class RepairRequestController extends Controller
 {
     public function index()
@@ -77,26 +73,5 @@ class RepairRequestController extends Controller
 
         return redirect()->back()->with('success', 'ลบรายการเรียบร้อยแล้ว');
     }
-
-    public function createUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:10',
-            'email' => 'required|email|max:20',
-            'password' => 'required|string|max:255',
-            'role' => ['required', new Enum(Role::class)],
-        ]);
-
-        User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'role'=>Role::form($request->role)->value,
-            'password'=>Hash::make($request->password)
-        ]);
-
-        return redirect()->back()->with('success','สร้างผู้ใช้สำเร็จแล้ว');
-        
-    }
-
 
 }

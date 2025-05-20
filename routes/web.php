@@ -29,6 +29,7 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('/requests', AdminRepair::class)->only(['index', 'update', 'store', 'destroy']);
     Route::resource('/users', ManageUser::class)->only(['index', 'update', 'store', 'destroy']);
+    Route::get('/users/{user}/edit', [ManageUser::class, 'edit']);
 });
 
 // TECHNICIAN SECTION

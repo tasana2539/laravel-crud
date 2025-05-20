@@ -32,29 +32,5 @@
       })
     }
 
-    function openPdfPreview(repairId) {
-      fetch("{{ route('repair.pdf.single-request') }}", {
-          method: "POST",
-          headers: {
-              "X-CSRF-TOKEN": "{{ csrf_token() }}",
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ repair_id: repairId })
-      })
-      .then(() => {
-          // เมื่อ session พร้อมแล้ว เปลี่ยน src ของ iframe
-          const iframe = document.getElementById('pdfIframe');
-          iframe.src = "{{ route('repair.pdf.single-view') }}";
-
-          // เปลี่ยนลิงก์ของปุ่มดาวน์โหลด
-          const downloadBtn = document.getElementById('downloadPdfBtn');
-          downloadBtn.href = "{{ route('repair.pdf.single-view') }}?download=1";
-
-          // เปิด modal
-          const modal = new bootstrap.Modal(document.getElementById('pdfPreviewModal'));
-          modal.show();
-      });
-  }
-
 </script>
 @endsection

@@ -66,7 +66,12 @@
                 <td>{{ $repair->technician->name ?? '-' }}</td>
                 <td>{{ $repair->created_at->format('d/m/Y H:i') }}</td>
                 <td>{{ optional($repair->latestLog)->updated_at?->format('d/m/Y H:i') ?? '-' }}</td>
-                <td class="text-center">
+                <td class="">
+                    <button 
+                        class="btn btn-sm btn-outline-secondary" 
+                        onclick="openPdfPreview({{ $repair->id }})">
+                        รายละเอียด
+                    </button>
                     @if($repair->status !== 'rejected' && $repair->status !== 'cancel' && $repair->status !== 'completed')
                         <button class="btn btn-sm btn-primary"
                             data-bs-toggle="modal"
