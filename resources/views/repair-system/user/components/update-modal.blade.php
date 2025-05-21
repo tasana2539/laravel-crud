@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="note" class="form-label">รายละเอียด</label>
+                        <label for="description" class="form-label">รายละเอียด</label>
                         <textarea name="description" id="description" rows="3" class="form-control"></textarea>
                     </div>
 

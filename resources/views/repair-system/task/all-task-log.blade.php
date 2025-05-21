@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card-body mb-4">
-  <div class="row">
-    <a type="button" class="btn btn-outline-primary col-md-1" href="{{ route(auth()->user()->role.'.requests.index') }}">
-        dashboard
-    </a>
-
-
-  </div>
-</div>
 <div class="card">
   <div class="card-header">
     ตารางข้อมูล

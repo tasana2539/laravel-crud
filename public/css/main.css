@@ -2,3 +2,8 @@ table th:not(:first-child),
 table td:not(:first-child) {
     min-width: 200px;
 }
+
+table th:last-child,
+table td:last-child {
+    min-width: 400px;
+}

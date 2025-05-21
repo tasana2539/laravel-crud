@@ -124,6 +124,24 @@
                         </div>
                     @endif
                 </div>
+                <div class="card-body mb-4">
+                    <div class="row">
+                        <a type="button" class="btn btn-outline-primary col-md-1" href="{{ route(auth()->user()->role.'.requests.index') }}">
+                            dashboard
+                        </a>
+                        @if ((Auth::user()->role === 'admin' || Auth::user()->role === 'user') && Request::url() !== 'http://127.0.0.1:8000/tasks' && Request::url() !== 'http://127.0.0.1:8000/admin/users')
+                            <button type="button" class="btn btn-outline-success mx-md-2 col-md-1" data-bs-toggle="modal" data-bs-target="#repairModal">
+                                แจ้งซ่อม
+                            </button>
+                        @endif
+                        @if (Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.users.index') }}" class="mx-md-2 btn btn-outline-secondary col-md-1">จัดการผู้ใช้</a>
+                        @endif
+                        @if (Auth::user()->role !== 'user')
+                            <a href="{{ route('tasks.index') }}" class="mx-md-2 btn btn-outline-secondary col-md-1">ประวัติงานทั้งหมด</a>
+                        @endif
+                    </div>
+                </div>
             @endguest
             @yield('content')
         </main>

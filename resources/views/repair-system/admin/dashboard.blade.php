@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card-body mb-4">
-  <div class="row">
-    <button type="button" class="btn btn-outline-primary col-md-1" data-bs-toggle="modal" data-bs-target="#repairModal">
-        แจ้งซ่อม
-    </button>
-    <a href="{{ route('admin.users.index') }}" class="mx-md-2 btn btn-outline-secondary col-md-1">จัดการผู้ใช้</a>
-    <a href="{{ route('tasks.index') }}" class="mx-md-2 btn btn-outline-secondary col-md-1">ประวัติงานทั้งหมด</a>
-
-
-  </div>
-</div>
 <div class="card">
   <div class="card-header">
     ตารางข้อมูล

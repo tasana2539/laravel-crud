@@ -105,7 +105,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($repair->logs as $log)
+            @forelse ( $repair->logs as $log )
                 <tr>
                     <td>
                         <span class="fw-bold">{{ $log->status_after }}</span>
@@ -113,7 +113,11 @@
                     <td>{{ $log->updater->name ?? '-' }}</td>
                     <td>{{ $log->updated_at->format('d/m/Y H:i') }}</td>
                 </tr>
-            @endforeach
+            @empty
+                 <tr>
+                    <td colspan="3" class="text-center text-muted">ยังไม่มีการดำเนินการ</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
