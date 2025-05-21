@@ -4,7 +4,6 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\RepairRequest;
-use App\Models\User;
 
 class RepairsTable extends Component
 {

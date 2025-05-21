@@ -50,7 +50,7 @@
             <th>หัวข้อ</th>
             <td>{{ $repair->title }}</td>
         </tr>
-        
+
         <tr>
             <th>ชื่อผู้แจ้ง</th>
             <td>{{ $repair->user->name }}</td>
@@ -59,6 +59,12 @@
             <th>ช่างผู้รับผิดชอบ</th>
             <td>{{ $repair->technician->name ?? '-' }}</td>
         </tr>
+        @if (auth()->user()->role !== 'user')
+            <tr>
+                <th>ความสำคัญ</th>
+                <td>{{ $repair->priority ?? '-' }}</td>
+            </tr>
+        @endif
         <tr>
             <th>สถานะล่าสุด</th>
             <td>{{ $repair->latestLog->status_after ?? '-' }}</td>

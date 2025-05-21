@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        
+
         @forelse($repairs as $repair)
         {{-- @json($repair->logs, JSON_PRETTY_PRINT) --}}
             <tr>
@@ -32,7 +32,7 @@
                         }
                     }}
 
-                    bg-{{ 
+                    bg-{{
                         match($repair->status) {
                             'pending' => 'secondary',
                             'assigned' => 'primary',
@@ -52,6 +52,11 @@
                 <td>{{ $repair->created_at->format('d/m/Y H:i') }}</td>
                 <td>{{ optional($repair->latestLog)->updated_at?->format('d/m/Y H:i') ?? '-' }}</td>
                 <td>
+                    <button
+                        class="btn btn-sm btn-outline-secondary"
+                        onclick="openPdfPreview({{ $repair->id }})">
+                        รายละเอียด
+                    </button>
                     @if($repair->status === 'pending' || $repair->status === 'assigned' || $repair->status === 'returned')
                         <button class="btn btn-sm btn-primary"
                             data-bs-toggle="modal"

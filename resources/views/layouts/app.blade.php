@@ -21,28 +21,28 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <script>
         function openPdfPreview(repairId) {
-      fetch("{{ route('repair.pdf.single-request') }}", {
-          method: "POST",
-          headers: {
-              "X-CSRF-TOKEN": "{{ csrf_token() }}",
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ repair_id: repairId })
-      })
-      .then(() => {
-          // เมื่อ session พร้อมแล้ว เปลี่ยน src ของ iframe
-          const iframe = document.getElementById('pdfIframe');
-          iframe.src = "{{ route('repair.pdf.single-view') }}";
+            fetch("{{ route('repair.pdf.single-request') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ repair_id: repairId })
+            })
+            .then(() => {
+                // เมื่อ session พร้อมแล้ว เปลี่ยน src ของ iframe
+                const iframe = document.getElementById('pdfIframe');
+                iframe.src = "{{ route('repair.pdf.single-view') }}";
 
-          // เปลี่ยนลิงก์ของปุ่มดาวน์โหลด
-          const downloadBtn = document.getElementById('downloadPdfBtn');
-          downloadBtn.href = "{{ route('repair.pdf.single-view') }}?download=1";
+                // เปลี่ยนลิงก์ของปุ่มดาวน์โหลด
+                const downloadBtn = document.getElementById('downloadPdfBtn');
+                downloadBtn.href = "{{ route('repair.pdf.single-view') }}?download=1";
 
-          // เปิด modal
-          const modal = new bootstrap.Modal(document.getElementById('pdfPreviewModal'));
-          modal.show();
-      });
-    }
+                // เปิด modal
+                const modal = new bootstrap.Modal(document.getElementById('pdfPreviewModal'));
+                modal.show();
+            });
+        }
     </script>
 <body>
     @include('repair-system.export.single-export-modal')
@@ -107,7 +107,7 @@
                 <div class="">
                     <h1>{{Auth::user()->role}} dashboard</h1>
                     <p>Welcome, {{ Auth::user()->name }}</p>
-                
+
                     @if(session('success'))
                         <div class="alert alert-success mt-2">
                             {{ session('success') }}

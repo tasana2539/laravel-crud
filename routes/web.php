@@ -10,6 +10,7 @@ use App\Http\Controllers\Technician\RepairRequestController as TechnicianRepair;
 use App\Http\Controllers\ITManager\RepairRequestController as ITmanagerRepair;
 use App\Http\Controllers\Repair\RepairExportController as RepairExport;
 use App\Http\Controllers\Admin\ManageUsersController as ManageUser;
+use App\Http\Controllers\Repair\TasksController as Task;
 
 // หน้าแรก
 Route::get('/', fn () => view('welcome'));
@@ -42,6 +43,14 @@ Route::middleware(['auth', 'role:it-manager'])->prefix('it-manager')->name('it-m
     Route::resource('/requests', ITmanagerRepair::class)->only(['index', 'update']);
 });
 
+//only user permission
+Route::resource('/tasks', Task::class)
+->only(['index'])
+->middleware(['auth', 'role:admin,it-manager,technician']);
+Route::get('/tasks/pdf/view', [Task::class, 'viewPdf'])->middleware(['auth', 'role:admin,it-manager,technician'])->name('task.pdf.view');
+Route::post('/tasks/pdf/post', [Task::class, 'requestPdf'])->middleware(['auth', 'role:admin,it-manager,technician'])->name('task.pdf.request');
+
 //global route
 Route::post('/repair/pdf/single-request', [RepairExport::class, 'requestPdf'])->name('repair.pdf.single-request');
 Route::get('/repair/pdf/single-view', [RepairExport::class, 'viewPdf'])->name('repair.pdf.single-view');
+
